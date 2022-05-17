@@ -1,0 +1,107 @@
+TASK 2
+VIEW FOR THE SUMMARIZED REPORT
+USE [ADB]
+GO
+/****** Object:  View [dbo].[vietnam_report]    Script Date: 28/03/2022 09:05:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create view [dbo].[vietnam_report] as
+(
+select a.uniqueid,
+case a.gender
+when 1.0 then 'male'
+else 'female'
+end as 'Gender',
+case a.province
+when 1.0 then 'Ben Tre'
+when 2.0 then 'Dan Nang'
+when 3.0 then 'Hung Yen'
+when 4.0 then 'Lao Cai'
+when 5.0 then 'Phu Yen'
+end as 'Province',
+case a.MOM_EDUC
+when 0.0 then 'Never been to school'
+when 1.0 then 'Primary school'
+when 2.0 then 'lower secondary school'
+when 3.0 then 'intermediate vocational training'
+when 4.0 then 'upper secondary school'
+when 5.0 then 'Higher education'
+else 'dont know'
+end as 'Mother Education',
+case a.DAD_EDUC
+when 0.0 then 'Never been to school'
+when 1.0 then 'Primary school'
+when 2.0 then 'lower secondary school'
+when 3.0 then 'intermediate vocational training'
+when 4.0 then 'upper secondary school'
+when 5.0 then 'Higher education'
+else 'dont know'
+end as 'Father Education',
+case a.STHVCHR
+when 0.0 then 'No'
+else 'yes'
+end as 'Student have study chair',
+case a.STHVLAMP
+when 0.0 then 'No'
+else 'yes'
+end as 'student have study lamp',
+case a.LOCALITY
+when 1.0 then 'rural'
+else 'urban'
+end as 'locality',
+case STITMOW1
+when 0.0 then 'No' else 'Yes'
+end as 'student have maths textbook',
+case a.STITMOW2
+when 0.0 then 'No' else 'yes'
+end as 'student have english textbook',
+case a.STBRWBK
+when 0.0 then 'no,there is a library/bookstore'
+when 1.0 then 'yes,i borrow books' else 'no library/bookstore at school'
+end as 'student borrow books',
+case a.SCAVLB1
+when 0.0 then 'no' else 'yes'
+end as 'school has chalkboard/marker',
+case a.SCAVLB3
+when 0.0 then 'no' else 'yes'
+end as 'teaches has a desk',
+case a.SCAVLB4
+when 0.0 then 'no' else 'yes'
+end as 'teaches has a chair',
+case a.SCAVLB5
+when 0.0 then 'no' else 'yes'
+end as 'avaiability of books in school',
+case a.sthvcomp
+when 0.0 then 'No'
+else 'yes'
+end as 'access to computer/laptop',
+case a.sthvintr
+when 0.0 then 'No'
+else 'yes'
+end as 'access to internet',
+case a.stitmow8 
+when 0.0 then 'No'
+else 'yes'
+end as 'student have pocket calculator',
+case a.scavlb10
+when 0.0 then 'No'
+else 'yes'
+end as 'school have IT facility',
+case a.scavlb5
+when 0.0 then 'No'
+else 'Yes'
+end as 'School have books',
+case b.htstddrp when '1.0' then 'never/rarely' when '2.0' then 'occassionally' else 'often' end as 'student dropout',
+case b.htchdlbr when '1.0' then 'never/rarely' when '2.0' then 'occassionally' else 'often' end as 'child labour',
+case b.htflsinf when '1.0' then 'never/rarely' when '2.0' then 'occassionally' else 'often' end as 'failing school infrastructure',
+case b.stcmphme when '1.0' then 'never or almost' when '2.0' then 'once/twice a month' when '3.0' then 'once/twice a week'
+else 'everyday' end as 'use computer for school work at home',
+case b.stcmpsch when '1.0' then 'never or almost' when '2.0' then 'once/twice a month' when '3.0' then 'once/twice a week'
+else 'everyday' end as 'use computer for school work at school',
+case b.stcmpoth when '1.0' then 'never or almost' when '2.0' then 'once/twice a month' when '3.0' then 'once/twice a week'
+else 'everyday' end as 'use computer for school work at anyplace'
+from dbo.vietnam_first_wave a join dbo.vietnam_second_wave b
+on a.UNIQUEID = b.UNIQUEID)
+GO
